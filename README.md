@@ -3,7 +3,7 @@
 
 ## 原理
 ###  读取dex文件生成一个新的DexClassLoader,然后利用反射将context.getClassLoade()的parent设置为新的DexClassLoader，利用了类加载机制中的双亲委派模型。
-https://github.com/VincentTung/LoadDex/raw/master/img/class_parent_delegate.png
+ ![image](https://github.com/VincentTung/LoadDex/blob/master/img/class_parents_%20delegate.png)
 ### dex文件生成过程
 #### 1. class生成jar文件 
          jar -cvf demo.jar -C build/intermediates/classes/debug/ .
