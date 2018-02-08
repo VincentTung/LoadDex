@@ -18,3 +18,6 @@
          jar -cvf demo.jar -C build/intermediates/classes/debug/ .
 #### 2.  使用bulid-tools下的dx命令生成 dex文件
          ./dx --dex --output=classes.dex demo.jar
+         
+### dex加载流程(8.0)
+稍后补充
