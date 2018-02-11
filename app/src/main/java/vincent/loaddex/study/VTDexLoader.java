@@ -43,4 +43,7 @@ public class VTDexLoader {
 
     public native static boolean loadDexUsedLibrary(ClassLoader cl, File dexDir, List<File> files);
 
+    public native static int dlOpenTest();
+    public native static void assetCopyNative(Context context,String fileName);
+
 }

@@ -1,6 +1,9 @@
 #include <jni.h>
 #include <string>
-
+#include <dlfcn.h>
+#include "VLog.h"
+#include <android/asset_manager.h>
+#include <android/asset_manager_jni.h>
 
 
 extern "C"
@@ -80,4 +83,65 @@ Java_vincent_loaddex_study_VTDexLoader_loadDexUsedLibrary  (JNIEnv *env, jclass 
     }
 
     return true;
+}
+
+
+
+extern "C"
+
+JNIEXPORT jint JNICALL
+Java_vincent_loaddex_study_VTDexLoader_dlOpenTest(JNIEnv *env, jclass type) {
+
+
+
+    /**
+     * 4.3是可以的
+     */
+    LOGD("Java_vincent_loaddex_study_VTDexLoader_dlOpenTest");
+   void* handle =  dlopen("/system/lib/libdvm.so", RTLD_NOW);
+
+    if(!handle){
+        LOGE("dlopen option failed.");
+        return 0;
+    }
+    unsigned int (*dexRoundUp2) (unsigned int);
+    dexRoundUp2 = (unsigned int (*) (unsigned int))dlsym(handle,"_Z16dexRoundUpPower2j");
+    if(dexRoundUp2){
+
+        unsigned  int result = dexRoundUp2(10);
+        LOGD("dexRound2(10):%d", result);
+        return result;
+    }
+    return 0;
+
+
+}
+
+
+
+/**
+ * native asset 文件操作
+ */
+extern "C"
+JNIEXPORT void JNICALL
+Java_vincent_loaddex_study_VTDexLoader_assetCopyNative(JNIEnv *env, jobject instance,
+                                                       jobject jcontext, jstring fileName_) {
+    const char *fileName = env->GetStringUTFChars(fileName_, 0);
+
+
+    env->PushLocalFrame(16);
+    // 通过调用Context.getAssets()获取java层中的AssetManger对象
+    jclass contextCls = env->GetObjectClass(jcontext);
+    jmethodID getAssetsMethod = env->GetMethodID(contextCls, "getAssets", "()Landroid/content/res/AssetManager;");
+    jobject assetManagerObj = env->CallObjectMethod(jcontext, getAssetsMethod);
+
+     AAssetManager *am = AAssetManager_fromJava(env, assetManagerObj);
+    AAsset *asset = AAssetManager_open(am, fileName, 0);
+
+    off_t len = AAsset_getLength(asset);
+    const void *assetBuf = AAsset_getBuffer(asset);
+
+
+    env->PopLocalFrame(NULL);
+    env->ReleaseStringUTFChars(fileName_, fileName);
 }

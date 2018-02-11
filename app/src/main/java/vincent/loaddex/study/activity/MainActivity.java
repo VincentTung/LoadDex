@@ -2,11 +2,10 @@ package vincent.loaddex.study.activity;
 
 import android.content.Intent;
 import android.content.res.AssetManager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -34,6 +33,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         findViewById(R.id.sample_btn).setOnClickListener(this);
 
+//        int result = VTDexLoader.dlOpenTest();
+//        Toast.makeText(this,String.valueOf(result),Toast.LENGTH_SHORT).show();
+
+        VTDexLoader.assetCopyNative(this,"classes.dex");
 
         try {
             File file = copyAsset(DEX_FILE_NAME);
@@ -42,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 List<File> files = new ArrayList<File>(1);
                 files.add(file);
 
-                VTDexLoader.loadDexNative(this, file.getAbsolutePath());
+//                VTDexLoader.loadDexNative(this, file.getAbsolutePath());
 //                boolean result = VTDexLoader.loadDexUsedLibrary(getClassLoader(), getCacheDir(), files);
 //                Log.d(TAG, "load dex result: " + result);
 
