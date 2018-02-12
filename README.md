@@ -20,4 +20,5 @@
          ./dx --dex --output=classes.dex demo.jar
          
 ### dex加载流程(8.0)
-稍后补充
+
+ ![image](https://github.com/VincentTung/LoadDex/blob/master/img/dex_load_code_logic.png)
