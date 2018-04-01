@@ -4,7 +4,7 @@
 ### PathClassLoader DexClassLoader继承关系
  ![image](https://github.com/VincentTung/LoadDex/blob/master/img/loader_extends.jpg)
 ## 原理
-###  读取dex文件生成一个新的DexClassLoader,然后利用反射将context.getClassLoade()的parent设置为新的DexClassLoader，利用了类加载机制中的双亲委派模型。
+###  读取dex文件生成一个新的DexClassLoader,然后利用反射将context.getClassLoader()的parent设置为新的DexClassLoader，利用了类加载机制中的双亲委派模型。
  ![image](https://github.com/VincentTung/LoadDex/blob/master/img/class_parents_%20delegate.png)
 
 ### context.getClassLoader()默认获得是一个PathClassLoader，它的parent是一个BootClassLoader
